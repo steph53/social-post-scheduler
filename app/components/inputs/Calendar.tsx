@@ -3,89 +3,76 @@
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
-import {useState, useEffect } from "react";
+import interactionPlugin, {DropArg} from '@fullcalendar/interaction';
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import moment from 'moment';
+import uuid from 'react-uuid';
+import usePostModal from '@/app/hooks/usePostModal';
+import useCalendarEvent from '@/app/hooks/useCalendarEvent';
 
 const Calendar = () => {
-    const [state, setState] = useState({
-        nextId: 2,
-        weekendsVisible: true,
-        calendarEvents: [
-          {
-            id: "1",
-            title: "All-day event",
-            color: "#388e3c",
-            start: "2001-08-02",
-            end: "2001-08-02",
-
-          },
-        ]
-    });
-
-    
-    useEffect(() => {
-        console.log(state.calendarEvents);
-    },[state]);
+    const PostModal = usePostModal();
+    const CalendarStore = useCalendarEvent();
+    const calendarRef = useRef<FullCalendar>(null);
+    const calendarApi = calendarRef.current?.getApi();
 
     const handleEventChange = (eventInfo: any) => {
-        console.log(eventInfo);
-        const newEvents = state.calendarEvents.map((event) => {
-            if (event.id === eventInfo.event.id) {
-                return { ...event, start: eventInfo.event.start, end: eventInfo.event.end };
-            } else {
-                return event;
-            }
-        });
-
-        setState((state) => {
-        return {
-            ...state,
-            calendarEvents: newEvents
-        };
-        });
+        CalendarStore.updateEvent(eventInfo.event.id, eventInfo.event);
     }
-
     // handle event receive
-    const handleEventReceive = (eventInfo: any) => {
-        console.log("---received---");
-        const newEvent = {
-            id: String(state.nextId),
+    const handleEventReceive =(eventInfo: any) => {
+        const id = uuid();
+        const newEvent =  calendarApi?.addEvent({
+            id: id,
             title: eventInfo.draggedEl.getAttribute("title"),
             color: eventInfo.draggedEl.getAttribute("data-color"),
-            start: eventInfo.event.start,
-            end: eventInfo.event.end
-        };
-
-        setState((state) => {
-        state.nextId++;
-        return {
-            ...state,
-            calendarEvents: state.calendarEvents.concat(newEvent)
-        };
-        });
+            start: eventInfo.date,
+            editable: true,
+            extendedProps: {
+                socialNetwork: '',
+                imageURL:'',
+                caption: '',
+            }
+        })
+        calendarApi?.unselect();
+        if (newEvent) handlePostAdd(newEvent);
     };
-        
-    return ( 
+
+    const handlePostAdd = (eventInfo: any) => {
+        PostModal.onOpen(eventInfo);
+        CalendarStore.addEvent(eventInfo);
+    };
+
+
+    const handleEventClick = (clickInfo: any) => {
+        PostModal.onOpen(clickInfo.event);
+    }
+
+    const handleEventRemove = (id: string) => {
+        CalendarStore.removeEvent(id);
+    }
+
+    return (
         <div className="text-xs h-[80%] px-5">
             <FullCalendar
+                ref={calendarRef}
                 plugins={[timeGridPlugin, interactionPlugin, dayGridPlugin]}
                 initialView='timeGridWeek'
-                weekends={state.weekendsVisible}
-                events={state.calendarEvents}
+                weekends={true}
+                events={CalendarStore.calendarEvents}
                 height="100%"
                 headerToolbar={{start: 'today prev,next', center: 'title', end: 'dayGridMonth,timeGridWeek,timeGridDay'}}
                 buttonText={{today: 'Today', month: 'Month', week: 'Week', day: 'Day'}}
                 nowIndicator={true}
                 editable={true}
+                eventClick={(info)=>handleEventClick(info)}
                 eventChange={handleEventChange}
                 rerenderDelay={10}
                 droppable={true}
-                slotDuration='00:30:00'
                 slotLabelInterval={{hours: 1}}
-                eventReceive={handleEventReceive}
+                drop={handleEventReceive}
                 allDaySlot={false}
             />
-            
         </div>
     );
     

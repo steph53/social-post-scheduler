@@ -1,12 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {IBM_Plex_Sans, Inter} from "next/font/google";
 import ClientOnly from "./components/ClientOnly";
 import Navbar from "./components/navbar/Navbar";
 import Container from "./components/Container";
 import Modal from "./components/modals/Modal";
+import PostModal from "./components/modals/postModal/PostModal";
 
-const inter = Inter({ subsets: ["latin"] });
+const IBM_Plex = IBM_Plex_Sans({ subsets: ["latin"], weight: '400'});
 
 export const metadata: Metadata = {
     title: "Social Media Manager",
@@ -20,10 +21,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={IBM_Plex.className}>
                     <div className="relative w-full">
                         <div className="absolute top-0 left-0 w-full h-full ">
-                            <Modal/>
+                            <PostModal/>
                         </div>
                         <div className="
                             flex 

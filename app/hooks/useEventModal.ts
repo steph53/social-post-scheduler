@@ -1,14 +1,14 @@
 import {create } from "zustand"
-interface PostModalStore {
+interface EventModalStore {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
 }
 
-const usePostModal = create<PostModalStore>((set) => ({
+const useEventModal = create<EventModalStore>((set) => ({
     isOpen: false,
     onOpen: () => set({isOpen: true}),
     onClose: () => set({isOpen: false})
 }));
- 
-export default usePostModal;
+
+export default useEventModal;

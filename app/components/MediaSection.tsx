@@ -6,36 +6,38 @@ import {TbGridDots} from 'react-icons/tb';
 import {AiOutlineStar} from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { Draggable } from '@fullcalendar/interaction';
+import usePostModal from '../hooks/usePostModal';
+
 
 const MediaSection = () => {
     const [hovered, setHovered] = useState("Upload Media");
-    
-    
+    const PostModal = usePostModal();
     // load external events
     useEffect(() => {
         let draggableEl:any = document.getElementById("external-events");
-        new Draggable(draggableEl, {
+        const draggable = new Draggable(draggableEl, {
             itemSelector: ".fc-event",
             eventData: function (eventEl) {
                 let id = eventEl.dataset.id;
                 let title = eventEl.getAttribute("title");
                 let color = eventEl.dataset.color;
-                let allDay = false;
-                let start = "";
-                let end = "";
 
                 return {
                 id: id,
                 title: title,
                 color: color,
-                start: start,
-                end: end,
-                allDay: allDay,
-                create: true
+                create: false
                 };
             }
         });
+        return () => {
+            draggable.destroy();
+        }
     },[]);
+    
+    const handleOpen = () => {
+        PostModal.onOpen();
+    }
     return ( 
         <div  className='
         w-[320px]
@@ -79,12 +81,13 @@ const MediaSection = () => {
                         justify-center 
                         my-2
                         cursor-grab
-                        rounded-md'
+                        rounded-large'
                     data-id= "2"
                     title="New Post"
                     data-color='#1bc3fe'
                     data-start="2020-12-31"
                     data-end="2020-12-31"
+                    onClick={handleOpen}
                         >
                     <div
                         className='
@@ -106,7 +109,6 @@ const MediaSection = () => {
                 </div>
                 </div>
             </div>
-            
             <hr/>
             <div
                 className='flex flex-row items-center px-4 w-full gap-3 h-[50px]'

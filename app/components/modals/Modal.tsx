@@ -1,37 +1,83 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogFooter,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"  
+import { Button } from "@/components/ui/button"
+
 interface ModalProps {
-    header?: string;
-    body?: string;
-    footer?: string;
+    header?: React.ReactElement;
+    body?: React.ReactElement;
+    footer?: React.ReactElement;
+    isOpen?: boolean;
+    primaryButtonLabel?: string;
+    secondaryButtonLabel?: string;
+    primaryButtonAction?: () => void;
+    secondaryButtonAction?: () => void;
+    onClose?: () => void;
+    size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 }
 
-const Modal = () => {
+const ModalComponent: React.FC<ModalProps> = ({
+    header,
+    body,
+    footer,
+    isOpen,
+    primaryButtonLabel,
+    secondaryButtonLabel,
+    primaryButtonAction,
+    secondaryButtonAction,
+    onClose,
+    size 
+}) => {
+    
+    const [showModal, setShowModal] = useState(isOpen);
+
+    useEffect(() => {
+        setShowModal(isOpen);
+    },[isOpen]);
+
+    const handleClose = useCallback(() => {
+        setShowModal(false);
+        onClose && onClose();
+    },[onClose]);
     return (
-        <div className="relative flex flex-col h-screen">
-            <div className=" w-screen h-screen flex z-50 absolute top-0 right-0 bg-black opacity-40">
-            </div> 
-            <div
-                className=" lg:h-[700px]
-                            opacity-100 
-                            lg:w-8/12
-                            bg-white
-                            self-center
-                            flex
-                            flex-col
-                            z-[60]
-                            rounded-lg
-                            lg:m-auto
-                            "
+    <>
+        {showModal ? (
+            <Dialog
+                open={showModal}
+                onOpenChange={handleClose}
             >
-                <div className="flex flex-col h-full">
-                    <div className="flex flex-row justify-between">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>     
+                <DialogContent className="max-w-3xl">
+                    <DialogHeader>
+                        <h1>{header}</h1>
+                    </DialogHeader>
+                        {body}
+                    <DialogFooter className="!justify-between">
+                        <div>
+                            {footer}
+                        </div>
+                        <div className="justify-between grid grid-cols-2 gap-3">
+                            <Button color="danger" variant="secondary" onClick={onClose}>
+                                {secondaryButtonLabel}
+                            </Button>
+                            <Button color="primary" onClick={primaryButtonAction }>
+                                {primaryButtonLabel}
+                            </Button>
+                        </div>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        ): ""}     
+    </>
     );
 }
  
-export default Modal;
+export default ModalComponent;
