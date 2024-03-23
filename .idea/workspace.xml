@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbe3202c-30df-46c4-ac24-4607ddb71a95" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/components/modals/postModal/DatePicker.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/AccountsContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/AccountsContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MediaSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MediaSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/inputs/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/inputs/Calendar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/modals/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/Modal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/modals/PostModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hooks/usePostModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +62,7 @@
       <workItem from="1710407104093" duration="41575000" />
       <workItem from="1710698711480" duration="1190000" />
       <workItem from="1710756876019" duration="1621000" />
-      <workItem from="1710970008730" duration="6256000" />
+      <workItem from="1710970008730" duration="7053000" />
     </task>
     <servers />
   </component>
@@ -92,7 +79,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
